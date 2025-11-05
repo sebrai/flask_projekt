@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        alter {{ref_name}}
+    </title>
+</head>
+<body>
+    <h1>what stat do you want to change about {{ref_name}}</h1>
+    <div hidden id="data">{{data}}</div>
+    <label for="stat">what data do you want to alter</label>
+        <select name="stat" id="select">
+            <option value="" disabled selected> please select an option</option>
+            <option value="name">name</option>
+            <option value="color">color</option>
+        </select>
+        <table hidden id="table">
+            <tr>
+                <td id="tobox">
+                    <label id="label" for="new">please selct a new color</label>
+                    <input type="text" id="to" name="new">
+                </td>
+                <td>
+                    <input type="submit">
+                </td>
+            </tr>
+        </table>
+     <script src="{{url_for('static',filename='js/alter.js')}}"></script>
+</body>
+</html>

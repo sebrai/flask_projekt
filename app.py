@@ -64,7 +64,18 @@ def users():
 
 @app.route('/alter/<name>')
 def alter(name):
-    return render_template('hello.html',ref_name = name)
+    mydb = mysql.connector.connect(
+        host = "10.200.14.13",
+        port= 3306,
+        user = 'extsebrai',
+        password = password, 
+        database = 'flask'
+        )
+    mycursor = mydb.cursor()
+    mycursor.execute("SELECT * FROM users WHERE name = %s", (name,))
+    result = mycursor.fetchall()
+
+    return render_template('alter.html',ref_name = name, data = result)
 
 
 
