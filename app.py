@@ -62,20 +62,37 @@ def users():
     result = mycursor.fetchall()
     return render_template('data.html',user=result)
 
-@app.route('/alter/<name>')
+@app.route('/alter/<name>',methods =['POST'])
 def alter(name):
-    mydb = mysql.connector.connect(
-        host = "10.200.14.13",
-        port= 3306,
-        user = 'extsebrai',
-        password = password, 
-        database = 'flask'
-        )
-    mycursor = mydb.cursor()
-    mycursor.execute("SELECT * FROM users WHERE name = %s", (name,))
-    result = mycursor.fetchall()
+    if request.method == 'POST':
+        navn = request.form['name']
+        color =request.form['color']
+        mydb = mysql.connector.connect(
+            host = "10.200.14.13",
+            port= 3306,
+            user = 'extsebrai',
+            password = password, 
+            database = 'flask'
+            )
+        mycursor = mydb.cursor()
+        mycursor.execute(F"UPDATE users SET name = {(navn,)}, color = {(color,)}  WHERE name = {(name,)}") 
+        mydb.commit()
+        mycursor.execute("SELECT * FROM users")
+        result = mycursor.fetchall()
+        return render_template('data.html',user=result)
+    else:
+        mydb = mysql.connector.connect(
+            host = "10.200.14.13",
+            port= 3306,
+            user = 'extsebrai',
+            password = password, 
+            database = 'flask'
+            )
+        mycursor = mydb.cursor()
+        mycursor.execute("SELECT * FROM users WHERE name = %s", (name,))
+        result = mycursor.fetchall()
 
-    return render_template('alter.html',ref_name = name, data = result)
+        return render_template('alter.html',ref_name = name, data = result)
 
 
 
