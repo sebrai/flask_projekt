@@ -1,46 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>user data</title>
 </head>
 <style>
-    #table{
+    #table {
         /* border: solid black 2px; */
         min-height: 20px;
         min-width: 20px;
         width: 70%;
         margin: 0 auto;
     }
-    td{
+
+    td {
         border: solid black 2px;
-        min-height: 50px; ;
+        min-height: 50px;
+        ;
         font-size: x-large;
         font-family: Arial, Helvetica, sans-serif;
-        
+
     }
-    tr{
+
+    tr {
         height: 30px;
         /* background-color: blue; */
-       
+
     }
-    th{
+
+    th {
         border: solid black 2px;
         border-bottom: none;
         /* padding-bottom: 300px; */
         font-size: xx-large;
-           font-family: Arial, Helvetica, sans-serif;
+        font-family: Arial, Helvetica, sans-serif;
     }
-   
 </style>
+
 <body>
     <div hidden id="data"> {{user}}</div>
-    <table id="table">
+    <div id="whole">
+        <table id="table">
 
-    </table>
-   
+        </table>
+    </div>
+
+
 
     <script src="{{url_for('static',filename='js/data.js')}}"></script>
 </body>
+
 </html>

@@ -62,7 +62,7 @@ def users():
     result = mycursor.fetchall()
     return render_template('data.html',user=result)
 
-@app.route('/alter/<name>',methods =['POST'])
+@app.route('/alter/<name>',methods =['GET','POST'])
 def alter(name):
     if request.method == 'POST':
         navn = request.form['name']
@@ -75,7 +75,7 @@ def alter(name):
             database = 'flask'
             )
         mycursor = mydb.cursor()
-        mycursor.execute(F"UPDATE users SET name = {(navn,)}, color = {(color,)}  WHERE name = {(name,)}") 
+        mycursor.execute("UPDATE users SET name = %s, color = %s  WHERE name = %s",(navn,color,name)) 
         mydb.commit()
         mycursor.execute("SELECT * FROM users")
         result = mycursor.fetchall()
@@ -97,8 +97,26 @@ def alter(name):
 
 
 @app.route('/delete/<name>')
-def delete():
-    pass
+def delete(name):
+    mydb = mysql.connector.connect(
+    host = "10.200.14.13",
+    port= 3306,
+    user = 'extsebrai',
+    password = password, 
+    database = 'flask'
+    )
+    mycursor = mydb.cursor()
+    mycursor.execute("SELECT id FROM users WHERE name = %s",(name,))
+    row = mycursor.fetchone()
+    if row:
+        val  = row[0]
+        print(val)
+        mycursor.execute("DELETE FROM users WHERE id = %s",(val,))
+        mydb.commit()
+        mycursor.fetchall()
+    mycursor.execute("SELECT * FROM users")
+    result = mycursor.fetchall()
+    return render_template('data.html',user=result)
 
 if __name__ == '__main__':
     app.run(debug =True)

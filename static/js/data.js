@@ -30,14 +30,14 @@ function isColorLightOrDark(color) {
         return null;
     }
 
-   
+
     const hsp = Math.sqrt(
         0.299 * (r * r) +
         0.587 * (g * g) +
         0.114 * (b * b)
     );
 
-   
+
     if (hsp > 127.5) {
         return true;
     } else {
@@ -49,8 +49,8 @@ console.table(data)
 // console.log(data.length)
 
 let tnid = document.createTextNode("id")
-let tnname =document.createTextNode("name")
-let tncolor = document.createTextNode("fav_color")
+let tnname = document.createTextNode("name")
+let tncolor = document.createTextNode("favorite_color")
 let t_options = document.createTextNode("actions")
 
 let eid = document.createElement("th")
@@ -78,22 +78,22 @@ for (let i = 0; i < data.length; i++) {
     for (let j = 0; j < data[i].length; j++) {
         const content = data[i][j]
         const tnode = document.createTextNode(content)
-        const box =document.createElement("td")
+        const box = document.createElement("td")
         box.appendChild(tnode)
         row.appendChild(box)
-        if (content[0]== "#"){ // if this is the color row
+        if (content[0] == "#") { // if this is the color row
             box.style.backgroundColor = content
 
-            if(!isColorLightOrDark(content)){
+            if (!isColorLightOrDark(content)) {
                 box.style.color = "white"
             }
             else {
-                box.style.color ="black"
+                box.style.color = "black"
             }
             // console.log("color")
         }
     }
-    let box  = document.createElement("td")
+    let box = document.createElement("td")
     let alter = document.createElement("button")
     let alter_tekst = document.createTextNode("alter ")
     let del = document.createElement("button")
@@ -103,19 +103,30 @@ for (let i = 0; i < data.length; i++) {
     box.appendChild(alter)
     box.appendChild(del)
     row.appendChild(box)
-    alter.addEventListener("click",() => {
+    alter.addEventListener("click", () => {
         console.log("button got clicked", data[i][1])
         const wowurl = new URL(window.location)
-        wowurl.pathname =`/alter/${data[i][1]}`
-        history.replaceState(null,"",wowurl)
+        wowurl.pathname = `/alter/${data[i][1]}`
+        history.replaceState(null, "", wowurl)
         location.reload()
     })
-     del.addEventListener("click",() => {
+    del.addEventListener("click", () => {
         console.log("button got clicked", data[i][1])
         const wowurl = new URL(window.location)
-        wowurl.pathname =`/delete/${data[i][1]}`
-        history.pushState(null,"",window.location)
+        wowurl.pathname = `/delete/${data[i][1]}`
+        history.pushState(null, "", window.location)
         window.location = wowurl
     })
 }
+let entrytxt = document.createTextNode("add new")
+let entrybtn = document.createElement("button")
+entrybtn.appendChild(entrytxt)
+document.getElementById("whole").appendChild(entrybtn)
+entrybtn.addEventListener("click", () => {
+    console.log("new form")
+    const wowurl = new URL(window.location)
+    wowurl.pathname = "/form"
+    history.pushState(null, "", window.location)
+    window.location = wowurl
+})
 // console.log(table)
